@@ -1,4 +1,9 @@
-import type { DetalleProducto, RespuestaProductos } from "@/types/producto";
+import type {
+  DetalleProducto,
+  ItemCarrito,
+  RespuestaPedido,
+  RespuestaProductos,
+} from "@/types/producto";
 
 const URL_API = "https://dummyjson.com";
 
@@ -24,6 +29,24 @@ export async function obtenerProducto(id: string): Promise<DetalleProducto | nul
   }
   if (!respuesta.ok) {
     throw new Error("Error al cargar el producto");
+  }
+
+  return respuesta.json();
+}
+
+// manda el pedido a dummyjson (/carts/add), la API lo simula y no lo guarda de verdad
+export async function crearPedido(items: ItemCarrito[]): Promise<RespuestaPedido> {
+  const respuesta = await fetch(`${URL_API}/carts/add`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      userId: 1,
+      products: items.map((item) => ({ id: item.producto.id, quantity: item.cantidad })),
+    }),
+  });
+
+  if (!respuesta.ok) {
+    throw new Error("No se pudo procesar el pedido");
   }
 
   return respuesta.json();

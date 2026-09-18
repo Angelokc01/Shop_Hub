@@ -30,3 +30,10 @@ export interface ItemCarrito {
   producto: Producto;
   cantidad: number;
 }
+
+// lo que devuelve dummyjson cuando se crea el carrito (pedido)
+export interface RespuestaPedido {
+  id: number;
+  total: number;
+  totalQuantity: number;
+}

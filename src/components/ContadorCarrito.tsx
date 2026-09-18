@@ -3,17 +3,12 @@
 import { useCarrito } from "@/context/CarritoContext";
 
 export default function ContadorCarrito() {
-  const { items } = useCarrito();
-
-  // cuento todas las unidades, no solo los productos diferentes
-  let total = 0;
-  for (const item of items) {
-    total = total + item.cantidad;
-  }
+  // el total de unidades ya viene calculado desde el contexto
+  const { totalArticulos } = useCarrito();
 
   return (
     <span className="bg-white text-indigo-700 font-semibold px-4 py-1.5 rounded-full">
-      🛒 Carrito: {total}
+      🛒 Carrito: {totalArticulos}
     </span>
   );
 }
